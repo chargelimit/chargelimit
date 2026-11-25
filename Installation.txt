@@ -1,0 +1,81 @@
+==================================================
+ ChargeLimit — Installation (English / Deutsch)
+==================================================
+
+ENGLISH
+
+ChargeLimit is a small menu bar app. It sets your MacBook's battery
+charge limit: 30–65 % (battery care) or Apple's levels 80–100 %.
+
+Requirements: MacBook with Apple silicon, macOS 27 or later,
+an administrator password for this Mac.
+
+1. INSTALL
+   Drag "ChargeLimit" onto the "Applications" folder in this window.
+
+2. FIRST START
+   Open ChargeLimit from the Applications folder. If macOS says it
+   cannot be opened: System Settings → "Privacy & Security" → scroll
+   down → "Open Anyway" next to ChargeLimit.
+   (This appears because the app is not from the App Store.)
+
+   If macOS says the app "is damaged": open "Terminal"
+   (Cmd + Space → "Terminal" → Enter), type this line, press Enter:
+       xattr -cr /Applications/ChargeLimit.app
+
+3. USE
+   Click the battery icon in the menu bar → tap a value →
+   "Set limit to … %" → enter your Mac password.
+   100 % (no limit) needs no password.
+   The power adapter must be connected to change the limit.
+
+GOOD TO KNOW
+- "Open at login": switch it on at the bottom of the window.
+- The limit stays in place after you quit the app.
+  To charge normally again: tap "100", then "Set limit to 100 %".
+- On a Mac without a battery (iMac, Mac mini, Mac Studio) the app
+  shows a notice and quits.
+
+More: https://github.com/chargelimit/chargelimit
+
+
+--------------------------------------------------
+DEUTSCH
+
+ChargeLimit ist ein kleines Programm in der Menüleiste. Es stellt die
+Ladegrenze des Akkus im MacBook ein: 30–65 % (schonend) oder Apples
+Stufen 80–100 %.
+
+Voraussetzungen: MacBook mit Apple-Chip, macOS 27 oder neuer,
+das Kennwort eines Administrators dieses Macs.
+
+1. INSTALLIEREN
+   In diesem Fenster "ChargeLimit" auf den Ordner "Applications"
+   (= Programme) ziehen.
+
+2. ERSTES ÖFFNEN
+   ChargeLimit im Programme-Ordner öffnen. Kommt der Hinweis, dass die
+   App nicht geöffnet werden kann: Systemeinstellungen →
+   "Datenschutz & Sicherheit" → ganz nach unten → bei ChargeLimit auf
+   "Trotzdem öffnen" klicken.
+   (Der Hinweis kommt, weil die App nicht aus dem App Store stammt.)
+
+   Erscheint stattdessen "ist beschädigt": Programm "Terminal" öffnen
+   (Cmd + Leertaste → "Terminal" → Enter), diese Zeile eingeben, Enter:
+       xattr -cr /Applications/ChargeLimit.app
+
+3. BENUTZEN
+   Oben in der Menüleiste erscheint ein Akku-Symbol. Darauf klicken →
+   Wert antippen → "Grenze auf … % setzen" → Mac-Kennwort eingeben.
+   Bei 100 % (keine Grenze) ist kein Kennwort nötig.
+   Setzen geht nur mit angeschlossenem Netzteil.
+
+GUT ZU WISSEN
+- Autostart: im Fenster unten einschalten.
+- Die Grenze bleibt auch nach dem Beenden der App bestehen.
+  Zurück auf normales Laden: "100" antippen, dann
+  "Grenze auf 100 % setzen".
+- Auf einem Mac ohne Akku (iMac, Mac mini, Mac Studio) meldet sich die
+  App mit einem Hinweis und beendet sich wieder.
+
+Mehr: https://github.com/chargelimit/chargelimit
