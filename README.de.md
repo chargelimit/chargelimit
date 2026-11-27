@@ -1,6 +1,6 @@
 # ChargeLimit
 
-**Die Ladegrenze des MacBook-Akkus unter 80 % setzen — aus der Menüleiste, mit zwei Klicks.**
+**ChargeLimit setzt die Ladegrenze Ihres MacBook-Akkus auch unter Apples 80 % — bis hinunter auf 30 %.**
 
 macOS hat eine eingebaute Ladegrenze (Systemeinstellungen → Batterie), die aber nur bis 80 % hinunter reicht.
 ChargeLimit stellt Apples eigene Grenze auf **30–65 %** — oder auf Apples übliche Stufen 80–100 %.

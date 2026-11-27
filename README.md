@@ -1,6 +1,6 @@
 # ChargeLimit
 
-**Set your MacBook's battery charge limit below 80 % — from the menu bar, in two clicks.**
+**ChargeLimit sets your MacBook's battery charge limit below Apple's 80 % — all the way down to 30 %.**
 
 macOS has a built-in charge limit (System Settings → Battery), but it only goes down to 80 %.
 ChargeLimit lets you set Apple's own limit to **30–65 %** — or to Apple's regular steps of 80–100 %.
