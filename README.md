@@ -9,19 +9,20 @@ ChargeLimit lets you set Apple's own limit to **30–65 %** — or to Apple's re
 
 <p align="center"><img src="docs/screenshot-en.png" width="300" alt="ChargeLimit menu bar window"></p>
 
-## Why charge less than 80 %?
+## Why ChargeLimit?
 
-Lithium-ion batteries age faster when they sit at a high charge level for long periods.
-If your MacBook is plugged in most of the day — at a desk, on a dock — keeping it at 50–60 % instead
-of 80–100 % is gentler on the battery. When you need the full range for a trip, set it back to 100 % with one click.
+If your MacBook lives on a powered dock or Thunderbolt hub, its battery sits almost full all day — and that is
+exactly what wears it out faster. ChargeLimit keeps it at the level you choose, even below Apple's 80 % (say 40 %),
+so it ages much more slowly. When you need the full range for a trip, set it back to 100 % with one click.
 
 ## What it does
 
 - **Two rows of buttons:** *Battery care* 30, 35 … 65 % (green) and *Apple levels* 80, 85 … 100 % (blue).
 - **Uses Apple's own charge limit** — the same one you find in System Settings → Battery.
   ChargeLimit only sets the value; macOS does the rest.
-- **Nothing needs to keep running.** The limit stays in place after you quit the app —
-  the app is only needed to change the value.
+- **Nothing needs to keep running.** The limit stays in place after you quit the app and after you restart
+  your Mac — the app is only needed to change the value.
+- **Works with "Optimized Battery Charging" turned on** — tested over two nights, the limit held.
 - **Never blocks charging completely:** the lowest possible value is 30 %.
 - **English and German**, switchable in the window.
 - **Optional "Open at login"**, so the menu bar icon is always there.

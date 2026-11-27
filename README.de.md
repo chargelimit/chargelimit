@@ -9,19 +9,21 @@ ChargeLimit stellt Apples eigene Grenze auf **30–65 %** — oder auf Apples ü
 
 <p align="center"><img src="docs/screenshot-de.png" width="300" alt="ChargeLimit-Fenster in der Menüleiste"></p>
 
-## Warum weniger als 80 %?
+## Warum ChargeLimit?
 
-Lithium-Ionen-Akkus altern schneller, wenn sie lange voll geladen bleiben.
-Hängt Ihr MacBook die meiste Zeit am Netzteil — am Schreibtisch, an der Dockingstation —, schont ein Ladestand
-von 50–60 % den Akku mehr als 80–100 %. Für eine Reise stellen Sie mit einem Klick wieder auf 100 %.
+Wer sein MacBook ständig an einer Dockingstation oder einem Thunderbolt-Hub mit Stromversorgung betreibt, hält den
+Akku fast immer voll — und genau das lässt ihn schneller altern. ChargeLimit hält ihn stattdessen auf dem Wert, den
+Sie wählen, auch unter Apples 80 %, zum Beispiel bei 40 % — damit er deutlich langsamer altert.
+Für eine Reise stellen Sie mit einem Klick wieder auf 100 %.
 
 ## Was die App macht
 
 - **Zwei Knopfreihen:** *Schonend* 30, 35 … 65 % (grün) und *Apple-Stufen* 80, 85 … 100 % (blau).
 - **Nutzt Apples eigene Ladegrenze** — dieselbe wie in Systemeinstellungen → Batterie.
   ChargeLimit setzt nur den Wert, den Rest erledigt macOS.
-- **Nichts muss dauerhaft laufen.** Die Grenze bleibt auch nach dem Beenden der App bestehen —
-  die App braucht man nur zum Umstellen.
+- **Nichts muss dauerhaft laufen.** Die Grenze bleibt auch nach dem Beenden der App und nach einem Neustart
+  des Macs bestehen — die App braucht man nur zum Umstellen.
+- **Funktioniert auch bei eingeschaltetem „Optimiertes Laden der Batterie“** — in zwei Nächten getestet, die Grenze hat gehalten.
 - **Sperrt das Laden nie ganz:** Der kleinste mögliche Wert ist 30 %.
 - **Deutsch und Englisch**, im Fenster umschaltbar.
 - **Autostart auf Wunsch**, damit das Symbol in der Menüleiste immer da ist.
