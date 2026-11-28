@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ChargeLimit – Ladegrenze unter 80 % für das MacBook</title>
-<meta name="description" content="ChargeLimit setzt die Ladegrenze deines MacBook-Akkus auch unter Apples 80 % – bis hinunter auf 30 %. Kostenlos und quelloffen.">
+<title>ChargeLimit – Set your MacBook’s charge limit below 80 %</title>
+<meta name="description" content="ChargeLimit sets your MacBook’s battery charge limit below Apple’s 80 % – all the way down to 30 %. Free and open source.">
 <link rel="icon" href="bilder/icon.png">
 <style>
 :root{
@@ -116,7 +116,7 @@ footer .schmal{display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-be
 @media (prefers-reduced-motion:reduce){.fuellung,.strich,.wert{transition:none}}
 </style>
 </head>
-<body class="de">
+<body class="en">
 
 <header class="leiste">
   <div class="leiste-innen">
@@ -243,7 +243,7 @@ footer .schmal{display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-be
     de:{s:"Mit ChargeLimit möglich.",a:"Geht auch in den Systemeinstellungen.",v:"100 % – normal laden, keine Grenze."},
     en:{s:"Possible with ChargeLimit.",a:"System Settings can do this too.",v:"100 % – normal charging, no limit."}
   };
-  var werte=[30,35,40,45,50,55,60,65,80,85,90,95,100], aktuell=40, sprache="de";
+  var werte=[30,35,40,45,50,55,60,65,80,85,90,95,100], aktuell=40, sprache="en";
   var w=document.getElementById("waehler"), f=document.getElementById("fuellung"),
       st=document.getElementById("strich"), wt=document.getElementById("wert"), er=document.getElementById("erklaerung");
   werte.forEach(function(v){
@@ -264,7 +264,7 @@ footer .schmal{display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-be
   }
   document.querySelectorAll(".sprache button").forEach(function(b){b.addEventListener("click",function(){waehleSprache(b.dataset.sprache)})});
   var gemerkt=null; try{gemerkt=localStorage.getItem("cl-sprache")}catch(e){}
-  waehleSprache(gemerkt||((navigator.language||"de").toLowerCase().indexOf("de")===0?"de":"en"));
+  waehleSprache(gemerkt==="de"?"de":"en");
   // Ein einziger Moment: beim ersten Sichtbarwerden fällt der Akku von 100 auf 40 %.
   var still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
   if(!still&&"IntersectionObserver" in window){
