@@ -5,7 +5,7 @@
 macOS hat eine eingebaute Ladegrenze (Systemeinstellungen → Batterie), die aber nur bis 80 % hinunter reicht.
 ChargeLimit stellt Apples eigene Grenze auf **30–65 %** — oder auf Apples übliche Stufen 80–100 %.
 
-[English version](README.md)
+Webseite: [chargelimit.com](https://chargelimit.com) · [English version](README.md)
 
 <p align="center"><img src="docs/screenshot-de.png" width="300" alt="ChargeLimit-Fenster in der Menüleiste"></p>
 

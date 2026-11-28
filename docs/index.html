@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChargeLimit – Ladegrenze unter 80 % für das MacBook</title>
+<meta name="description" content="ChargeLimit setzt die Ladegrenze deines MacBook-Akkus auch unter Apples 80 % – bis hinunter auf 30 %. Kostenlos und quelloffen.">
+<link rel="icon" href="bilder/icon.png">
+<style>
+:root{
+  --weiss:#ffffff; --grau:#f5f5f7; --tinte:#1d1d1f; --leise:#6e6e73; --linie:#d2d2d7;
+  --gruen:#30c35a; --gruen-tief:#1f9e45; --blau:#0071e3; --blau-hover:#0077ed; --apple:#c7c7cc;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--weiss);color:var(--tinte);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:17px;line-height:1.47;letter-spacing:-.022em;-webkit-font-smoothing:antialiased}
+body.de [lang=en], body.en [lang=de]{display:none!important}
+a{color:var(--blau);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--blau);outline-offset:3px;border-radius:6px}
+
+/* Kopfleiste */
+.leiste{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.8);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.08)}
+.leiste-innen{max-width:980px;margin:0 auto;padding:0 22px;height:52px;display:flex;align-items:center;gap:20px}
+.marke{display:flex;align-items:center;gap:10px;font-weight:600;font-size:19px;color:var(--tinte)}
+.marke:hover{text-decoration:none}
+.marke img{width:28px;height:28px;border-radius:7px}
+.leiste nav{margin-left:auto;display:flex;align-items:center;gap:22px;font-size:14px}
+.leiste nav a{color:var(--tinte)}
+.sprache{display:flex;border:1px solid var(--linie);border-radius:980px;overflow:hidden}
+.sprache button{font:inherit;font-size:13px;border:0;background:none;color:var(--leise);padding:4px 11px;cursor:pointer}
+.sprache button[aria-pressed=true]{background:var(--tinte);color:#fff}
+
+/* Bühne */
+.buehne{text-align:center;padding:72px 22px 0;overflow:hidden}
+.buehne .icon{width:112px;height:112px;border-radius:25px;box-shadow:0 8px 24px rgba(31,158,69,.25)}
+.buehne h1{font-size:clamp(48px,9vw,80px);line-height:1.05;letter-spacing:-.015em;font-weight:700;margin-top:22px}
+.buehne .unter{font-size:clamp(22px,3.4vw,30px);line-height:1.2;font-weight:500;max-width:760px;margin:14px auto 0;letter-spacing:-.01em}
+.knopf{display:inline-block;background:var(--blau);color:#fff;font-size:17px;font-weight:500;padding:13px 26px;border-radius:980px;margin-top:34px}
+.knopf:hover{background:var(--blau-hover);text-decoration:none}
+.hinweis{color:var(--leise);font-size:14px;margin-top:14px}
+.fenster{margin:56px auto 0;width:min(340px,82vw);display:block;border-radius:16px;
+  box-shadow:0 40px 80px -20px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.1)}
+.buehne-boden{height:72px}
+
+/* Abschnitte */
+section{padding:110px 22px}
+.grau{background:var(--grau)}
+.schmal{max-width:820px;margin:0 auto}
+h2{font-size:clamp(34px,5.6vw,56px);line-height:1.07;font-weight:700;letter-spacing:-.005em;text-align:center}
+.lead{font-size:clamp(19px,2.4vw,24px);line-height:1.38;color:var(--leise);text-align:center;max-width:700px;margin:22px auto 0;font-weight:400}
+.lead strong{color:var(--tinte);font-weight:600}
+
+/* Die Skala — das eine besondere Element */
+.skala{max-width:860px;margin:64px auto 0}
+.akku{position:relative;height:132px;display:flex;align-items:center}
+.huelle{position:relative;flex:1;height:100%;border:6px solid var(--tinte);border-radius:30px;padding:8px}
+.pol{width:14px;height:44px;background:var(--tinte);border-radius:0 8px 8px 0;margin-left:5px}
+.innen{position:relative;height:100%;border-radius:18px;overflow:hidden;background:var(--weiss)}
+.zone-apple{position:absolute;top:0;bottom:0;left:80%;right:0;
+  background:repeating-linear-gradient(-45deg,#ececf0 0 8px,#f7f7f9 8px 16px)}
+.fuellung{position:absolute;top:0;bottom:0;left:0;width:40%;background:var(--gruen);border-radius:12px;
+  transition:width .9s cubic-bezier(.3,.7,.2,1),background-color .3s}
+.fuellung.apple{background:#8e8e93}
+.ebene{position:absolute;inset:8px;pointer-events:none}
+.strich{position:absolute;top:-30px;bottom:-30px;width:6px;margin-left:-3px;background:var(--tinte);border-radius:3px;
+  left:40%;transition:left .9s cubic-bezier(.3,.7,.2,1)}
+.wert{position:absolute;top:-64px;transform:translateX(-50%);left:40%;font-size:22px;font-weight:700;white-space:nowrap;
+  transition:left .9s cubic-bezier(.3,.7,.2,1)}
+.massstab{position:relative;height:56px;margin:38px 33px 0 14px;font-size:14px;color:var(--leise)}
+.massstab span{position:absolute;transform:translateX(-50%);top:0}
+.massstab span::before{content:"";display:block;width:1px;height:8px;background:var(--linie);margin:0 auto 6px}
+.bereiche{display:grid;grid-template-columns:30fr 35fr 15fr 20fr;margin:0 33px 0 14px;font-size:15px}
+.bereiche div{padding-top:10px;border-top:3px solid transparent}
+.bereiche .cl{grid-column:2;border-color:var(--gruen);color:var(--gruen-tief);font-weight:600}
+.bereiche .ap{grid-column:4;border-color:var(--apple);color:var(--leise);font-weight:600}
+.waehler{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:56px}
+.waehler button{font:inherit;font-size:16px;min-width:56px;padding:9px 0;border-radius:12px;border:1px solid var(--linie);
+  background:var(--weiss);color:var(--tinte);cursor:pointer;font-variant-numeric:tabular-nums}
+.waehler button.s{color:var(--gruen-tief)}
+.waehler button[aria-pressed=true]{background:var(--tinte);border-color:var(--tinte);color:#fff}
+.erklaerung{text-align:center;color:var(--leise);margin-top:22px;min-height:1.5em}
+
+/* Merkmale */
+.merkmale{display:grid;grid-template-columns:1fr 1fr;gap:56px 64px;max-width:860px;margin:72px auto 0}
+.merkmale h3{font-size:24px;line-height:1.2;font-weight:600;letter-spacing:.005em}
+.merkmale p{color:var(--leise);margin-top:8px}
+
+/* Installieren */
+.schritte{list-style:none;counter-reset:s;max-width:640px;margin:64px auto 0}
+.schritte li{counter-increment:s;display:grid;grid-template-columns:52px 1fr;gap:0 18px;padding:22px 0;border-top:1px solid var(--linie)}
+.schritte li:last-child{border-bottom:1px solid var(--linie)}
+.schritte li::before{content:counter(s);font-size:34px;font-weight:700;line-height:1;color:var(--gruen-tief);grid-row:span 2}
+.schritte strong{font-size:19px;font-weight:600}
+.schritte p{color:var(--leise);margin-top:4px}
+.mitte{text-align:center}
+.klein{font-size:14px;color:var(--leise);max-width:640px;margin:28px auto 0;text-align:center}
+
+footer{border-top:1px solid var(--linie);padding:28px 22px 48px;font-size:13px;color:var(--leise)}
+footer .schmal{display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between}
+
+@media (max-width:700px){
+  section{padding:80px 20px}
+  .merkmale{grid-template-columns:1fr;gap:40px}
+  .akku{height:92px}.huelle{border-width:5px;border-radius:22px;padding:6px}.innen{border-radius:14px}
+  .pol{height:32px;width:10px}
+  .massstab,.bereiche{margin-right:26px;margin-left:11px}
+  .ebene{inset:6px}
+  .wert{font-size:18px;top:-56px}
+  .leiste nav a{display:none}
+}
+@media (prefers-reduced-motion:reduce){.fuellung,.strich,.wert{transition:none}}
+</style>
+</head>
+<body class="de">
+
+<header class="leiste">
+  <div class="leiste-innen">
+    <a class="marke" href="#"><img src="bilder/icon.png" alt="">ChargeLimit</a>
+    <nav>
+      <a href="#installieren"><span lang="de">Installieren</span><span lang="en">Install</span></a>
+      <a href="https://github.com/chargelimit/chargelimit">GitHub</a>
+      <div class="sprache" role="group" aria-label="Sprache / Language">
+        <button type="button" data-sprache="de" aria-pressed="true">DE</button>
+        <button type="button" data-sprache="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="buehne">
+  <img class="icon" src="bilder/icon.png" alt="ChargeLimit-Symbol">
+  <h1>ChargeLimit</h1>
+  <p class="unter">
+    <span lang="de">Setzt die Ladegrenze deines MacBook-Akkus auch unter Apples 80 %&nbsp;– bis hinunter auf 30&nbsp;%.</span>
+    <span lang="en">Sets your MacBook’s battery charge limit below Apple’s 80 %&nbsp;– all the way down to 30&nbsp;%.</span>
+  </p>
+  <a class="knopf" href="https://github.com/chargelimit/chargelimit/releases/latest/download/ChargeLimit.dmg">
+    <span lang="de">Für dein MacBook laden</span><span lang="en">Download for your MacBook</span>
+  </a>
+  <p class="hinweis">
+    <span lang="de">Kostenlos und quelloffen. Für MacBooks mit Apple-Chip ab macOS 27.</span>
+    <span lang="en">Free and open source. For MacBooks with Apple silicon, macOS 27 or later.</span>
+  </p>
+  <img class="fenster" lang="de" src="bilder/screenshot-de.png" alt="Das ChargeLimit-Fenster in der Menüleiste, Ladegrenze 40 %">
+  <img class="fenster" lang="en" src="bilder/screenshot-en.png" alt="The ChargeLimit window in the menu bar, charge limit 40 %">
+  <div class="buehne-boden"></div>
+</div>
+
+<section class="grau" id="skala">
+  <div class="schmal">
+    <h2><span lang="de">Apple hört bei 80&nbsp;% auf.<br>ChargeLimit schon früher.</span><span lang="en">Apple stops at 80&nbsp;%.<br>ChargeLimit stops sooner.</span></h2>
+    <p class="lead">
+      <span lang="de">In den Systemeinstellungen geht die Ladegrenze nur bis 80 %. ChargeLimit stellt <strong>dieselbe Grenze von Apple</strong> auf jeden Wert zwischen 30 und 65 %.</span>
+      <span lang="en">System Settings only lets the charge limit go down to 80 %. ChargeLimit sets <strong>the very same Apple limit</strong> to any value from 30 to 65 %.</span>
+    </p>
+  </div>
+  <div class="skala" aria-hidden="true">
+    <div class="akku">
+      <div class="huelle"><div class="innen">
+        <div class="zone-apple"></div>
+        <div class="fuellung" id="fuellung"></div>
+      </div>
+        <div class="ebene"><div class="strich" id="strich"></div><div class="wert" id="wert">40 %</div></div>
+      </div>
+      <div class="pol"></div>
+    </div>
+    <div class="massstab">
+      <span style="left:0">0</span><span style="left:30%">30</span><span style="left:65%">65</span><span style="left:80%">80</span><span style="left:100%">100</span>
+    </div>
+    <div class="bereiche">
+      <div class="cl"><span lang="de">Mit ChargeLimit</span><span lang="en">With ChargeLimit</span></div>
+      <div class="ap"><span lang="de">Apple</span><span lang="en">Apple</span></div>
+    </div>
+  </div>
+  <div class="waehler" id="waehler" role="group" aria-label="Ladegrenze ausprobieren"></div>
+  <p class="erklaerung" id="erklaerung" aria-live="polite"></p>
+</section>
+
+<section>
+  <div class="schmal">
+    <h2><span lang="de">Am Dock altert der Akku schneller.</span><span lang="en">On a dock, your battery ages faster.</span></h2>
+    <p class="lead">
+      <span lang="de">Wer sein MacBook ständig an einer Dockingstation oder einem Thunderbolt-Hub mit Stromversorgung betreibt, hält den Akku fast immer voll – und genau das lässt ihn schneller altern. <strong>ChargeLimit hält ihn auf dem Wert, den du wählst</strong>, damit er deutlich langsamer altert. Für eine Reise stellst du mit einem Klick wieder auf 100 %.</span>
+      <span lang="en">If your MacBook lives on a powered dock or Thunderbolt hub, its battery sits almost full all day – and that is exactly what wears it out faster. <strong>ChargeLimit keeps it at the level you choose</strong>, so it ages much more slowly. Going on a trip? One click sets it back to 100 %.</span>
+    </p>
+  </div>
+  <div class="merkmale">
+    <div>
+      <h3><span lang="de">Setzt nur den Wert.</span><span lang="en">It only sets the value.</span></h3>
+      <p><span lang="de">ChargeLimit nutzt Apples eigene Ladegrenze, den Rest erledigt macOS. Nichts läuft dauerhaft im Hintergrund.</span><span lang="en">ChargeLimit uses Apple’s own charge limit and macOS does the rest. Nothing keeps running in the background.</span></p>
+    </div>
+    <div>
+      <h3><span lang="de">Bleibt, auch nach dem Neustart.</span><span lang="en">Stays put, even after a restart.</span></h3>
+      <p><span lang="de">Die Grenze gilt weiter, wenn du die App beendest oder den Mac neu startest.</span><span lang="en">The limit stays in place when you quit the app or restart your Mac.</span></p>
+    </div>
+    <div>
+      <h3><span lang="de">Verträgt sich mit optimiertem Laden.</span><span lang="en">Works with Optimized Battery Charging.</span></h3>
+      <p><span lang="de">In zwei Nächten mit eingeschaltetem „Optimiertes Laden“ getestet – die Grenze hat gehalten.</span><span lang="en">Tested over two nights with Optimized Battery Charging turned on – the limit held.</span></p>
+    </div>
+    <div>
+      <h3><span lang="de">Sperrt das Laden nie.</span><span lang="en">Never blocks charging.</span></h3>
+      <p><span lang="de">Der kleinste Wert ist 30 %. Darunter lädt dein MacBook immer.</span><span lang="en">The lowest value is 30 %. Below that, your MacBook always charges.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="grau" id="installieren">
+  <div class="schmal">
+    <h2><span lang="de">In drei Schritten installiert.</span><span lang="en">Installed in three steps.</span></h2>
+  </div>
+  <ol class="schritte">
+    <li><strong><span lang="de">ChargeLimit.dmg laden und öffnen.</span><span lang="en">Download and open ChargeLimit.dmg.</span></strong>
+      <p><span lang="de">Mit dem Knopf unten oder oben auf dieser Seite.</span><span lang="en">Use the button below or at the top of this page.</span></p></li>
+    <li><strong><span lang="de">ChargeLimit in den Ordner Programme ziehen.</span><span lang="en">Drag ChargeLimit into the Applications folder.</span></strong>
+      <p><span lang="de">Danach erscheint das Akku-Symbol in der Menüleiste.</span><span lang="en">The battery icon then appears in the menu bar.</span></p></li>
+    <li><strong><span lang="de">Beim ersten Start „Trotzdem öffnen“.</span><span lang="en">On first launch, choose “Open Anyway”.</span></strong>
+      <p><span lang="de">Die App kommt nicht aus dem App Store, deshalb fragt macOS einmal nach: Systemeinstellungen › Datenschutz &amp; Sicherheit › Trotzdem öffnen.</span><span lang="en">The app isn’t from the App Store, so macOS asks once: System Settings › Privacy &amp; Security › Open Anyway.</span></p></li>
+  </ol>
+  <p class="mitte"><a class="knopf" href="https://github.com/chargelimit/chargelimit/releases/latest/download/ChargeLimit.dmg"><span lang="de">Für dein MacBook laden</span><span lang="en">Download for your MacBook</span></a></p>
+  <p class="klein">
+    <span lang="de">Zum Umstellen fragt macOS nach dem Kennwort eines Administrators (bei 100 % nicht). Die vollständige Anleitung und den Quellcode findest du auf <a href="https://github.com/chargelimit/chargelimit/blob/main/README.de.md">GitHub</a>.</span>
+    <span lang="en">To change the limit, macOS asks for an administrator password (not for 100 %). The full guide and the source code are on <a href="https://github.com/chargelimit/chargelimit">GitHub</a>.</span>
+  </p>
+</section>
+</main>
+
+<footer>
+  <div class="schmal">
+    <span><span lang="de">ChargeLimit ist ein kostenloses Freizeitprojekt, MIT-Lizenz. Ohne Gewähr.</span><span lang="en">ChargeLimit is a free spare-time project, MIT license. No warranty.</span></span>
+    <span><a href="https://github.com/chargelimit/chargelimit">GitHub</a> &nbsp; <a href="https://github.com/chargelimit/chargelimit/issues"><span lang="de">Fehler melden</span><span lang="en">Report a problem</span></a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var texte={
+    de:{s:"Mit ChargeLimit möglich.",a:"Geht auch in den Systemeinstellungen.",v:"100 % – normal laden, keine Grenze."},
+    en:{s:"Possible with ChargeLimit.",a:"System Settings can do this too.",v:"100 % – normal charging, no limit."}
+  };
+  var werte=[30,35,40,45,50,55,60,65,80,85,90,95,100], aktuell=40, sprache="de";
+  var w=document.getElementById("waehler"), f=document.getElementById("fuellung"),
+      st=document.getElementById("strich"), wt=document.getElementById("wert"), er=document.getElementById("erklaerung");
+  werte.forEach(function(v){
+    var b=document.createElement("button"); b.type="button"; b.textContent=v; if(v<80) b.className="s";
+    b.addEventListener("click",function(){setze(v)}); w.appendChild(b);
+  });
+  function setze(v){
+    aktuell=v; f.style.width=v+"%"; st.style.left=v+"%"; wt.style.left=v+"%"; wt.textContent=v+" %";
+    f.classList.toggle("apple",v>=80);
+    Array.prototype.forEach.call(w.children,function(b){b.setAttribute("aria-pressed",String(+b.textContent===v))});
+    er.textContent=v===100?texte[sprache].v:(v<80?texte[sprache].s:texte[sprache].a);
+  }
+  function waehleSprache(l){
+    sprache=l; document.body.className=l; document.documentElement.lang=l;
+    document.querySelectorAll(".sprache button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.sprache===l))});
+    setze(aktuell);
+    try{localStorage.setItem("cl-sprache",l)}catch(e){}
+  }
+  document.querySelectorAll(".sprache button").forEach(function(b){b.addEventListener("click",function(){waehleSprache(b.dataset.sprache)})});
+  var gemerkt=null; try{gemerkt=localStorage.getItem("cl-sprache")}catch(e){}
+  waehleSprache(gemerkt||((navigator.language||"de").toLowerCase().indexOf("de")===0?"de":"en"));
+  // Ein einziger Moment: beim ersten Sichtbarwerden fällt der Akku von 100 auf 40 %.
+  var still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!still&&"IntersectionObserver" in window){
+    setze(100);
+    var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){setTimeout(function(){setze(40)},250);io.disconnect()}},{threshold:.5});
+    io.observe(document.getElementById("skala"));
+  } else setze(40);
+})();
+</script>
+</body>
+</html>

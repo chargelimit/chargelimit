@@ -5,7 +5,7 @@
 macOS has a built-in charge limit (System Settings → Battery), but it only goes down to 80 %.
 ChargeLimit lets you set Apple's own limit to **30–65 %** — or to Apple's regular steps of 80–100 %.
 
-[Deutsche Fassung](README.de.md)
+Website: [chargelimit.com](https://chargelimit.com) · [Deutsche Fassung](README.de.md)
 
 <p align="center"><img src="docs/screenshot-en.png" width="300" alt="ChargeLimit menu bar window"></p>
 
